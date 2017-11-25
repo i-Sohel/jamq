@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+{{define "indexPage"}}
+<!--
+	Intensify by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>JamQ</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../static/assets/css/main.css" />
+	</head>
+	<body>
+
+		<!-- Header 
+			<header id="header">
+				<nav class="left">
+					<a href="#menu"><span>Menu</span></a>
+				</nav>
+				<a href="index.html" class="logo">intensify</a>
+				<nav class="right">
+					<a href="#" class="button alt">Log in</a>
+				</nav>
+			</header> -->
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="content">
+					<h1>JamQ</h1>
+					<p>Just type the name of your favorate artist and book the concert ticket you want!</p>
+					<ul class="actions">
+						<li><a href="#one" class="button scrolly">Get Started</a></li>
+					</ul>
+				</div>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper">
+				<div class="inner">
+					<form method="GET" action="/results " id="submit-form">
+						<div class="row uniform">
+							<div class="9u 12u$(small)">
+								<input type="text" name="query" id="query" value="" placeholder="Query" />
+							</div>
+							<div class="3u$ 12u$(small)">
+								<input type="submit" value="Search" class="fit" onclick="toggle_visibility();" />
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+
+        <!-- Two -->
+        {{if $}}
+			<section id="two" class="wrapper style1 special">
+				<div class="inner">
+					<span class="image fit"><img src="{{ $.ImageURL }}" alt="" /></span>
+					<h2>{{ $.Name }}</h2>
+					<figure>
+                            <a href="{{$.Furl}}" class="button special">Facebook</a>
+					    </footer>
+					</figure>
+				</div>
+			</section>
+
+        <!-- Three -->
+			<section id="three" class="wrapper">
+                <div class="inner">
+                        {{range .Event}}
+                        <div class="flex-item box">
+                            <div class="image fit">
+                                <img src="{{ $.ImageURL }}" alt="" />
+                            </div>
+                            <div class="content">
+                                <a href="{{.URL}}"><h3>{{ .Venue.Name }}</h3></a>
+                                <p>This event will be in {{ .Venue.City }}, {{ .Venue.Country }} at {{ .Datetime }}</p>
+                            </div>
+                        </div>
+                        {{end}}
+                    </div>
+            </section>
+            {{else}} <span></span>{{end}}
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<h2>Get In Touch</h2>
+					<ul class="actions">
+						<li><span class="icon fa-phone"></span> <a href="#">(000) 000-0000</a></li>
+						<li><span class="icon fa-envelope"></span> <a href="#">example@example.com</a></li>
+						<li><span class="icon fa-map-marker"></span> 123 Somewhere Road, Nashville, TN 00000</li>
+					</ul>
+				</div>
+				<div class="copyright">
+					&copy; Untitled. Design <a href="https://templated.co">TEMPLATED</a>. Images <a href="https://unsplash.com">Unsplash</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/jquery.scrolly.min.js"></script>
+			<script src="../static/assets/js/skel.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
+
+	</body>
+</html>
+{{end}}

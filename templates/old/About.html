@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{{define "aboutPage"}}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/user.css">
+    <link rel="stylesheet" href="../static/bootstrap/fonts/font-awesome.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Twitter searcher</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    <span
+                    class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation"><a href="/">Home </a></li>
+                    <li class="active" role="presentation"><a href="#">About </a></li>
+                    <!--<li role="presentation"><a href="#">FAQ </a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="testimonials">
+        <h2 class="text-center">About the project</h2></section>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">About</h3></div>
+            <div class="panel-body">
+                <p>This is a small demonstration that uses Twitter API via IBM Bluemix created by Sohel Almozaini using Go!</p>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h5>IBM Bluemix© 2016</h5></div>
+                <div class="col-sm-6 social-icons"><a href="#"><span class="fa fa-facebook"></span></a><a href="#"><span class="fa fa-twitter"></span></a>
+                    <a
+                    href="#"><span class="fa fa-instagram"></span></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{{end}}

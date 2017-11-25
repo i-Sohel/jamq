@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{{define "indexPage"}}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter searcher</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/user.css">
+    <link rel="stylesheet" href="../static/bootstrap/fonts/font-awesome.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="/">Twitter searcher</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    <span
+                    class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" role="presentation"><a href="/">Home </a></li>
+                    <li role="presentation"><a href="/about">About </a></li>
+                    <!--<li role="presentation"><a href="#">FAQ </a></li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="testimonials">
+        <h2 class="text-center">Search on Twitter</h2></section>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Use the box below to srach on twitter feed using hashtags or usernames or any keyword</h3></div>
+            <div class="panel-body">
+                <form action="/results" method="GET">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span>Search</span></div>
+                        <input name="key" class="form-control" type="text" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Go!</button>
+                        </div>
+                    </div>
+                    <span>{{ .Name }}</span>
+                </form>
+                <ul class="list-group"> {{range .Event}}
+                    <li class="list-group-item">
+                        <a href="{{ .URL }}"><span>{{ .Venue.City }}</span></a></li> {{ end }}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h5>IBM Bluemix© 2016</h5></div>
+                <div class="col-sm-6 social-icons"><a href="#"><span class="fa fa-facebook"></span></a><a href="#"><span class="fa fa-twitter"></span></a>
+                    <a
+                    href="#"><span class="fa fa-instagram"></span></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{{end}}
