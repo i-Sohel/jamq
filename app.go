@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	//for extracting service credentials from VCAP_SERVICES
-	//"github.com/cloudfoundry-community/go-cfenv"
+	"path"
+	"runtime"
 )
 
 type Artist struct {
@@ -17,10 +17,10 @@ type Artist struct {
 	URL      string `json:"url"`
 	ImageURL string `json:"image_url"`
 	Furl     string `json:"facebook_page_url"`
-	Event    []Event_info
+	Event    []EventInfo
 }
 
-type Event_info struct {
+type EventInfo struct {
 	ID             string `json:"id"`
 	ArtistID       string `json:"artist_id"`
 	URL            string `json:"url"`
@@ -36,24 +36,21 @@ type Event_info struct {
 	} `json:"venue"`
 }
 
-/*type Combine struct {
-	Artist
-	Event
-}*/
-
 const (
 	DEFAULT_PORT = "8080"
-	size         = "5"
 	DEF_URL      = "https://rest.bandsintown.com/artists/" // API URL
 )
 
-var templates = template.Must(template.ParseGlob("templates/*.html"))
+// var templates = template.Must(template.ParseGlob("templates/*.html")) // Parse templates locally
+
+var _, filename, _, ok = runtime.Caller(0)
+var tmpl = template.Must(template.ParseGlob(path.Dir(filename) + "/templates/*.html"))
 
 func httpserve(w http.ResponseWriter, req *http.Request) {
-	templates.ExecuteTemplate(w, "indexPage", nil)
+	tmpl.ExecuteTemplate(w, "indexPage", nil)
 }
 
-// Get Twitter Serach results in JSON Format using GET request method
+// Get Artist results in JSON Format using GET request method
 func getJSONartist(url string, target interface{}) error {
 	r, err := http.Get(url)
 	if err != nil {
@@ -65,6 +62,7 @@ func getJSONartist(url string, target interface{}) error {
 	return res
 }
 
+// Get Event results in JSON Format using GET request method
 func getJSONevent(url string, target interface{}) error {
 	r, err := http.Get(url)
 	if err != nil {
@@ -76,23 +74,21 @@ func getJSONevent(url string, target interface{}) error {
 }
 
 func results(w http.ResponseWriter, req *http.Request) {
+
 	req.ParseForm()
 	keyword := req.FormValue("query") // Get the keywords from the template
 
+	// Construct the URL
 	URLArtist := DEF_URL + keyword + "?app_id=go"
 	URLEvent := DEF_URL + keyword + "/events?app_id=test"
 	finalURLArtist, _ := url.Parse(URLArtist)
 	finalURLEvent, _ := url.Parse(URLEvent)
-	fmt.Println(finalURLEvent)
-	res := &Artist{}
-	getJSONartist(finalURLArtist.String(), res)
-	getJSONevent(finalURLEvent.String(), &res.Event) // Get the data
-	// Return the data to the template
-	templates.ExecuteTemplate(w, "indexPage", res)
-}
 
-func about(w http.ResponseWriter, req *http.Request) {
-	templates.ExecuteTemplate(w, "aboutPage", nil)
+	res := &Artist{}
+	getJSONartist(finalURLArtist.String(), res)      // Get the artist data
+	getJSONevent(finalURLEvent.String(), &res.Event) // Get the event data
+
+	tmpl.ExecuteTemplate(w, "indexPage", res) // Return the data to the template
 }
 
 func main() {
@@ -103,7 +99,7 @@ func main() {
 
 	http.HandleFunc("/", httpserve)
 	http.HandleFunc("/results", results)
-	http.HandleFunc("/about", about)
+
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	log.Printf("Starting app on port %+v\n", port)
