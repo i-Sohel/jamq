@@ -12,6 +12,7 @@ import (
 	"runtime"
 )
 
+// Artist represents the artist main info
 type Artist struct {
 	Name     string `json:"name"`
 	URL      string `json:"url"`
@@ -20,6 +21,7 @@ type Artist struct {
 	Event    []EventInfo
 }
 
+// EventInfo represents the artist's event information
 type EventInfo struct {
 	ID             string `json:"id"`
 	ArtistID       string `json:"artist_id"`
@@ -37,8 +39,10 @@ type EventInfo struct {
 }
 
 const (
-	DEFAULT_PORT = "8080"
-	DEF_URL      = "https://rest.bandsintown.com/artists/" // API URL
+	//DefPort is the default app port
+	DefPort = "8080"
+	//DefURL is the default API URL
+	DefURL = "https://rest.bandsintown.com/artists/"
 )
 
 // var templates = template.Must(template.ParseGlob("templates/*.html")) // Parse templates locally
@@ -79,8 +83,8 @@ func results(w http.ResponseWriter, req *http.Request) {
 	keyword := req.FormValue("query") // Get the keywords from the template
 
 	// Construct the URL
-	URLArtist := DEF_URL + keyword + "?app_id=go"
-	URLEvent := DEF_URL + keyword + "/events?app_id=test"
+	URLArtist := DefURL + keyword + "?app_id=go"
+	URLEvent := DefURL + keyword + "/events?app_id=test"
 	finalURLArtist, _ := url.Parse(URLArtist)
 	finalURLEvent, _ := url.Parse(URLEvent)
 
@@ -94,7 +98,7 @@ func results(w http.ResponseWriter, req *http.Request) {
 func main() {
 	var port string
 	if port = os.Getenv("PORT"); len(port) == 0 {
-		port = DEFAULT_PORT
+		port = DefPort
 	}
 
 	http.HandleFunc("/", httpserve)
